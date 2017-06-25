@@ -1,5 +1,16 @@
 // Create by Xiaochen Wang
 
+const Sequelize = require('sequelize');
+
+var sequelize = new Sequelize('database', 'user', 'password', {
+    host: 'host',
+    dialect: 'postgres',
+    port: 5432,
+    dialectOptions: {
+        ssl: true
+    }
+});
+
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
         reject();
