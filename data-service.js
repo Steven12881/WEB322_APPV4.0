@@ -1,11 +1,5 @@
 // Create by Xiaochen Wang
 
-var fs = require("fs");
-
-var employess = []; //global array
-var departments = []; //global array
-var empCount = 0;
-
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
         try {
