@@ -11,8 +11,55 @@ var sequelize = new Sequelize('danje1mhbk3hao', 'turqcqnvbfsayk', 'c4ec2c9da2232
     }
 });
 
+sequelize.authenticate().then(function() {
+    console.log('Connection has been established successfully.');
+}).catch(function(err) {
+    console.log('Unable to connect to the database:', err);
+});
+
+var Employee = sequelize.define('Employee',{
+    employeeNum:{
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    firstName: Sequelize.STRING,
+    last_Name: Sequelize.STRING,
+    email: Sequelize.STRING,
+    SSN: Sequelize.STRING,
+    addressStreet: Sequelize.STRING,
+    addresCity: Sequelize.STRING,
+    addressState: Sequelize.STRING,
+    addressPostal: Sequelize.STRING,
+    matritalStatus: Sequelize.STRING,
+    isManager: Sequelize.BOOLEAN,
+    EmployeeManagerNum: Sequelize.INTEGER,
+    status: Sequelize.STRING,
+    department: Sequelize.INTEGER,
+    hireDate: Sequelize.STRING
+});
+
+var Department = sequelize.define('Department',{
+    departmentID:{
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    departmentName: Sequelize.STRING
+});
+
+
+
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
+
+        sequelize.sync().then(()=>{
+            Employee.create({
+                firstName: 'Progject1',
+            }).then((Employee)=>{
+                reject("unable to sync the database");
+            });
+        });
         reject();
     });
 }
@@ -20,6 +67,9 @@ module.exports.initialize = () => {
 module.exports.getAllEmployees = () => {
     var arryAllEmployees = [];
     return new Promise((resolve, reject) => {
+        sequelize.sync().then(()=>{
+            
+        })
         reject();
     });
 }
