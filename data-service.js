@@ -226,6 +226,38 @@ module.exports.addEmployee = (employeeData) => {
 module.exports.updateEmployee = (employeeData) => {
     employeeData.isManager = (employeeData.isManager) ? true : false;
     return new Promise((resolve, reject) => {
+        Employee.update({
+            employeeNum: employeeData.employeeNum,
+            firstName: employeeData.firstName,
+            last_name: employeeData.last_name,
+            email: employeeData.email,
+            SSN: employeeData.email,
+            addressStreet: employeeData.addressStreet,
+            addresCity: employeeData.addresCity,
+            isManager: employeeData.isManager,
+            addressState: employeeData.addressState,
+            addressPostal: employeeData.addressPostal,
+            employeeManagerNum: employeeData.employeeManagerNum,
+            status: employeeData.status,
+            department: employeeData.department,
+            hireDate: employeeData.hireDate,
+        }).then((data)=>{
+            resolve(data);
+        }).catch((err)=>{
+            reject("unable to create employee.");
+        });
         reject();
     });
+}
+
+module.exports.addDepartment = (departmentData) => {
+
+}
+
+module.exports.updateDepartment = (departmentData) => {
+
+}
+
+module.exports.getDepartmentById = (id) => {
+
 }
