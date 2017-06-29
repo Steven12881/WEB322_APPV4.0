@@ -24,7 +24,7 @@ var Employee = sequelize.define('Employee',{
         autoIncrement: true
     },
     firstName: Sequelize.STRING,
-    last_Name: Sequelize.STRING,
+    last_name: Sequelize.STRING,
     email: Sequelize.STRING,
     SSN: Sequelize.STRING,
     addressStreet: Sequelize.STRING,
@@ -33,7 +33,7 @@ var Employee = sequelize.define('Employee',{
     addressPostal: Sequelize.STRING,
     matritalStatus: Sequelize.STRING,
     isManager: Sequelize.BOOLEAN,
-    EmployeeManagerNum: Sequelize.INTEGER,
+    employeeManagerNum: Sequelize.INTEGER,
     status: Sequelize.STRING,
     department: Sequelize.INTEGER,
     hireDate: Sequelize.STRING
@@ -136,7 +136,7 @@ module.exports.getEmployeesByManager = (manager) => {
                 //     employeeManagerNum: [1,2,3,4,5,6,7]
                 // },
             });
-                resolve(data);
+                resolve();
             }).then((error)=>{
                 reject("no results returned.");
             });
@@ -181,13 +181,45 @@ module.exports.getManagers = () => {
 
 module.exports.getDepartments = () => {
     return new Promise((resolve, reject) => {
+        sequelize.sync().then(()=>{
+            Employee.findAll({
+                attributes: [1,2,3,4,5,6,7],
+                // where:{
+                //     employeeManagerNum: [1,2,3,4,5,6,7]
+                // },
+            });
+                resolve();
+            }).then((error)=>{
+                reject("no results returned.");
+            });
         reject();
     });
 }
 
 module.exports.addEmployee = (employeeData) => {
+    employeeData.isManager = (employeeData.isManager) ? true : false;
     return new Promise((resolve, reject) => {
-        reject();
+        Employee.create({
+            employeeNum: employeeData.employeeNum,
+            firstName: employeeData.firstName,
+            last_name: employeeData.last_name,
+            email: employeeData.email,
+            SSN: employeeData.email,
+            addressStreet: employeeData.addressStreet,
+            addresCity: employeeData.addresCity,
+            isManager: employeeData.isManager,
+            addressState: employeeData.addressState,
+            addressPostal: employeeData.addressPostal,
+            employeeManagerNum: employeeData.employeeManagerNum,
+            status: employeeData.status,
+            department: employeeData.department,
+            hireDate: employeeData.hireDate,
+        }).then((data)=>{
+            resolve(data);
+        }).catch((err)=>{
+            reject("unable to create employee.");
+        });
+        reject("unable to create employee.");
     });
 }
 
