@@ -51,7 +51,7 @@ var Department = sequelize.define('Department',{
 
 
 module.exports.initialize = () => {
-    
+
     return new Promise((resolve, reject) => {
 
         sequelize.sync().then((Employee)=>{
@@ -136,7 +136,7 @@ module.exports.getEmployeesByManager = (manager) => {
                 //     employeeManagerNum: [1,2,3,4,5,6,7]
                 // },
             });
-                resolve(employeeManagerNum);
+                resolve(data);
             }).then((error)=>{
                 reject("no results returned.");
             });
