@@ -16,7 +16,7 @@ var data_service = require("./data-service.js");
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 
-var HTTP_PORT = process.env.PORT || 3000;
+var HTTP_PORT = process.env.PORT || 8080;
 
 function onHttpStart() {
     console.log("Express http server listening on: " + HTTP_PORT);
@@ -137,8 +137,8 @@ app.get("/departments", (req, res) => {
 });
 
 app.get("/employees/add", (req, res) => {
-    data_service.getDepartments().then((data)=>{
-        res.render("addEmployee",{department: data});
+    data_service.getDepartments().then((data) => {
+        res.render("addEmployee",{departments: data});
     }).catch((err) => {
         res.render("addEmployee", {departments: []});
     });
