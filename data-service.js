@@ -48,8 +48,6 @@ var Department = sequelize.define('Department',{
     departmentName: Sequelize.STRING
 });
 
-
-
 module.exports.initialize = () => {
 
     return new Promise((resolve, reject) => {
@@ -57,7 +55,7 @@ module.exports.initialize = () => {
         sequelize.sync().then((Employee)=>{
                 resolve();
             }).catch((error)=> {
-                reject("unable to sync the database"); 
+                reject("unable to sync the database");
         });
         reject();
     });
@@ -289,5 +287,18 @@ module.exports.getDepartmentById = (id) => {
             resolve(data);
         }).catch((err)=>{
             reject("unable to create employee.");
+    });
+}
+
+module.exports.deleteEmployeeByNum = (empNum) =>{
+    return new Promise((resolve, reject) => {
+        Employee.destroy({
+            where:{
+                employeeNum: empNum
+            }
+        });
+         resolve(data);
+    }).catch((err) => {
+        reject();
     });
 }
