@@ -17,7 +17,7 @@ sequelize.authenticate().then(function() {
     console.log('Unable to connect to the database:', err);
 });
 
-var Employee = sequelize.define('Employee',{
+const Employee = sequelize.define('Employee',{
     employeeNum:{
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -39,7 +39,7 @@ var Employee = sequelize.define('Employee',{
     hireDate: Sequelize.STRING
 });
 
-var Department = sequelize.define('Department',{
+const Department = sequelize.define('Department',{
     departmentID:{
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -212,8 +212,8 @@ module.exports.addEmployee = (employeeData) => {
             status: employeeData.status,
             department: employeeData.department,
             hireDate: employeeData.hireDate,
-        }).then((data)=>{
-            resolve(data);
+        }).then(()=>{
+            resolve();
         }).catch((err)=>{
             reject("unable to create employee.");
         });
@@ -239,9 +239,9 @@ module.exports.updateEmployee = (employeeData) => {
             status: employeeData.status,
             department: employeeData.department,
             hireDate: employeeData.hireDate,
-        }).then((data)=>{
-            resolve(data);
-        }).catch((err)=>{
+        }).then(()=>{
+            resolve();
+        }).catch(()=>{
             reject("unable to create employee.");
         });
         reject();
@@ -253,9 +253,9 @@ module.exports.addDepartment = (departmentData) => {
         Department.create({
             departmentID: departmentData.departmentID,
             departmentName: departmentData.departmentName
-        }).then((data)=>{
-            resolve(data);
-        }).catch((err)=>{
+        }).then(()=>{
+            resolve();
+        }).catch(()=>{
             reject("unable to create employee.");
         });
         reject("unable to create employee.");
@@ -281,10 +281,10 @@ module.exports.getDepartmentById = (id) => {
         Department.findAll({
             where:{
                 departmentID: departmentData.departmentID,
-                departmentname: departmentData.departmentName
+                departmentName: departmentData.departmentName
             }
         });
-            resolve(data);
+            resolve(id);
         }).catch((err)=>{
             reject("unable to create employee.");
     });
@@ -297,7 +297,7 @@ module.exports.deleteEmployeeByNum = (empNum) =>{
                 employeeNum: empNum
             }
         });
-         resolve(data);
+         resolve(empNum);
     }).catch((err) => {
         reject();
     });
