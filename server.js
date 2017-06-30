@@ -117,7 +117,11 @@ app.get("/departments", (req, res) => {
 });
 
 app.get("/employees/add", (req, res) => {
-    res.render("addEmployee");
+    data_service.getDepartments.then((data)=>{
+        res.render("addEmployee",{department: data});
+    }).catch((err) => {
+        res.render("addEmployee", {departments: []});
+    });
 });
 
 app.get("/departments/add", (req,res) => {
