@@ -1,4 +1,4 @@
-// Create by Xiaochen Wang
+// Created by Xiaochen Wang
 
 const Sequelize = require('sequelize');
 
@@ -73,10 +73,8 @@ module.exports.getAllEmployees = () => {
 
     return new Promise((resolve, reject) => {
         sequelize.sync().then(()=>{
-            Employee.findAll({
-                order: employeeNum
-            });
-                resolve();
+            Employee.findAll();
+                resolve(Employee.findAll());
             }).catch((error)=>{
                 reject("no results returned.");
             });
@@ -183,30 +181,29 @@ module.exports.getDepartments = () => {
 }
 
 module.exports.addEmployee = (employeeData) => {
-
     employeeData.isManager = (employeeData.isManager) ? true : false;
     return new Promise((resolve, reject) => {
-        sequelize.sync().then(()=>{
-            Employee.create({
-                    employeeNum: employeeData.employeeNum,
-                    firstName: employeeData.firstName,
-                    last_name: employeeData.last_name,
-                    email: employeeData.email,
-                    SSN: employeeData.email,
-                    addressStreet: employeeData.addressStreet,
-                    addresCity: employeeData.addresCity,
-                    isManager: employeeData.isManager,
-                    addressState: employeeData.addressState,
-                    addressPostal: employeeData.addressPostal,
-                    employeeManagerNum: employeeData.employeeManagerNum,
-                    status: employeeData.status,
-                    department: employeeData.department,
-                    hireDate: employeeData.hireDate,
-                }).catch(()=>{
-                    reject("unable to create employee.");
-                });
-            });
-        resolve();
+        Employee.create({
+                employeeNum: employeeData.employeeNum,
+                firstName: employeeData.firstName,
+                last_name: employeeData.last_name,
+                email: employeeData.email,
+                SSN: employeeData.email,
+                addressStreet: employeeData.addressStreet,
+                addresCity: employeeData.addresCity,
+                isManager: employeeData.isManager,
+                addressState: employeeData.addressState,
+                addressPostal: employeeData.addressPostal,
+                employeeManagerNum: employeeData.employeeManagerNum,
+                status: employeeData.status,
+                department: employeeData.department,
+                hireDate: employeeData.hireDate
+        }).then(() => {
+            resolve(Employee);
+        }).catch(() => {
+            reject("unable to create employee.");
+        });
+        reject("unable to create employee.");
     });
 }
 
@@ -243,9 +240,9 @@ module.exports.addDepartment = (departmentData) => {
         Department.create({
             departmentId: departmentData.departmentId,
             departmentName: departmentData.departmentName
-        }).then(()=>{
+        }).then(() => {
             resolve(Department);
-        }).catch(()=>{
+        }).catch(() => {
             reject("unable to create employee.");
         });
         reject("unable to create employee.");
@@ -257,9 +254,9 @@ module.exports.updateDepartment = (departmentData) => {
         Department.update({
             departmentId: departmentData.departmentId,
             departmentName: departmentData.departmentName
-        }).then(()=>{
+        }).then(() => {
             resolve();
-        }).catch(()=>{
+        }).catch(() => {
             reject("unable to create employee.");
         });
         reject("unable to create employee.");
