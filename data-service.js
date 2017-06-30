@@ -187,12 +187,10 @@ module.exports.getDepartments = () => {
             Department.findAll({
                 order: ['departmentId'],
             });
-            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            resolve();
         }).catch((err) => {
             reject("no results returned.");
         });
-        reject();
+        resolve(Department.findAll());
     });
 }
 
