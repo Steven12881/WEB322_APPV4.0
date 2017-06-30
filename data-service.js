@@ -74,25 +74,13 @@ module.exports.getAllEmployees = () => {
     return new Promise((resolve, reject) => {
         sequelize.sync().then(()=>{
             Employee.findAll({
-                where:{
-                    attributes1: [employeeNum],
-                    attributes2: [firstName],
-                    attributes3: [last_name],
-                    attributes4: [email],
-                    attributes5: [SSN],
-                    attributes6: [addressStreet],
-                    attributes7: [addresCity],
-                    attributes8: [addressState],
-                    attributes9: [addressPostal],
-                    attributes10: [matritalStatus],
-                    attributes11: [EmployeeManagerNum]
-                }
+                order: employeeNum
             });
                 resolve();
             }).catch((error)=>{
                 reject("no results returned.");
             });
-        reject();
+        resolve(Employee.findAll());
     });
 }
 
@@ -198,27 +186,27 @@ module.exports.addEmployee = (employeeData) => {
 
     employeeData.isManager = (employeeData.isManager) ? true : false;
     return new Promise((resolve, reject) => {
-        Employee.create({
-            employeeNum: employeeData.employeeNum,
-            firstName: employeeData.firstName,
-            last_name: employeeData.last_name,
-            email: employeeData.email,
-            SSN: employeeData.email,
-            addressStreet: employeeData.addressStreet,
-            addresCity: employeeData.addresCity,
-            isManager: employeeData.isManager,
-            addressState: employeeData.addressState,
-            addressPostal: employeeData.addressPostal,
-            employeeManagerNum: employeeData.employeeManagerNum,
-            status: employeeData.status,
-            department: employeeData.department,
-            hireDate: employeeData.hireDate,
-        }).then(()=>{
-            resolve();
-        }).catch(()=>{
-            reject("unable to create employee.");
-        });
-        reject("unable to create employee.");
+        sequelize.sync().then(()=>{
+            Employee.create({
+                    employeeNum: employeeData.employeeNum,
+                    firstName: employeeData.firstName,
+                    last_name: employeeData.last_name,
+                    email: employeeData.email,
+                    SSN: employeeData.email,
+                    addressStreet: employeeData.addressStreet,
+                    addresCity: employeeData.addresCity,
+                    isManager: employeeData.isManager,
+                    addressState: employeeData.addressState,
+                    addressPostal: employeeData.addressPostal,
+                    employeeManagerNum: employeeData.employeeManagerNum,
+                    status: employeeData.status,
+                    department: employeeData.department,
+                    hireDate: employeeData.hireDate,
+                }).catch(()=>{
+                    reject("unable to create employee.");
+                });
+            });
+        resolve();
     });
 }
 
