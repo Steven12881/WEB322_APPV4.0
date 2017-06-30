@@ -17,7 +17,7 @@ sequelize.authenticate().then(function() {
     console.log('Unable to connect to the database:', err);
 });
 
-var Employee = sequelize.define('Employee',{
+const Employee = sequelize.define('Employee',{
     employeeNum:{
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -42,7 +42,7 @@ var Employee = sequelize.define('Employee',{
         updatedAt: false // disable updatedAt
 });
 
-var Department = sequelize.define('Department',{
+const Department = sequelize.define('Department',{
     departmentId:{
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -184,8 +184,12 @@ module.exports.getManagers = () => {
 module.exports.getDepartments = () => {
     return new Promise((resolve, reject) => {
         sequelize.sync().then(()=>{
-            resolve(Department.findAll());
-            }).catch((err) => {
+            Department.findAll({
+                order: ['departmentId'],
+            });
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            resolve();
+        }).catch((err) => {
             reject("no results returned.");
         });
         reject();
