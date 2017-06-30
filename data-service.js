@@ -187,10 +187,9 @@ module.exports.getDepartments = () => {
         sequelize.sync().then(()=>{
             Department.findAll({
                 attributes1: ['departmentId'],
-                where: {
-                    departmentId: 1
-                }
+                attributes2: ['departmentName']
             });
+                console.log(Department[0]),
                 resolve();
         }).catch(() => {
             reject("no results returned.");
@@ -272,9 +271,9 @@ module.exports.updateDepartment = (departmentData) => {
         Department.update({
             departmentId: departmentData.departmentId,
             departmentName: departmentData.departmentName
-        }).then((data)=>{
-            resolve(data);
-        }).catch((err)=>{
+        }).then(()=>{
+            resolve();
+        }).catch(()=>{
             reject("unable to create employee.");
         });
         reject("unable to create employee.");
@@ -289,8 +288,8 @@ module.exports.getDepartmentById = (id) => {
                 departmentName: departmentData.departmentName
             }
         });
-            resolve(id);
-        }).catch((err)=>{
+            resolve();
+        }).catch(()=>{
             reject("unable to create employee.");
     });
 }
@@ -302,8 +301,8 @@ module.exports.deleteEmployeeByNum = (empNum) =>{
                 employeeNum: empNum
             }
         });
-         resolve(empNum);
-    }).catch((err) => {
+         resolve();
+    }).catch(() => {
         reject();
     });
 }
