@@ -254,7 +254,7 @@ module.exports.addDepartment = (departmentData) => {
     return new Promise((resolve, reject) => {
         Department.create({
             departmentID: departmentData.departmentID,
-            departmentname: departmentData.departmentName
+            departmentName: departmentData.departmentName
         }).then((data)=>{
             resolve(data);
         }).catch((err)=>{
@@ -268,7 +268,7 @@ module.exports.updateDepartment = (departmentData) => {
     return new Promise((resolve, reject) => {
         Department.update({
             departmentID: departmentData.departmentID,
-            departmentname: departmentData.departmentName
+            departmentName: departmentData.departmentName
         }).then((data)=>{
             resolve(data);
         }).catch((err)=>{

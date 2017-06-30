@@ -160,7 +160,7 @@ app.post("/department/update", (req,res) => {
     data_service.updateDepartment(req.body).then((data)=>{
         console.log(req.body);
         res.redirect("/departments");
-    })
+    });
 });
 
 app.post("department/:departmentId",(req,res) => {
