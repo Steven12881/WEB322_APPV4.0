@@ -148,6 +148,15 @@ app.get("/departments/add", (req,res) => {
     res.render("addDepartment");
 });
 
+app.get("/employee/delete/:empNum", (req,res) => {
+    data_service.deleteEmployeeByNum(req.params.empNum).then((data) => {
+        console.log(req.body);
+        res.redirect("/employees");
+    }).catch((err) => {
+        res.status(500).send("Unable to Remove Employee / Employee not found");
+    });
+});
+
 app.post("/employees/add", (req, res) => {
     data_service.addEmployee(req.body).then((data) => {
         console.log(req.body);
