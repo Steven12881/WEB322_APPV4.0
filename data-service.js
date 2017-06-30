@@ -251,13 +251,43 @@ module.exports.updateEmployee = (employeeData) => {
 }
 
 module.exports.addDepartment = (departmentData) => {
-
+    return new Promise((resolve, reject) => {
+        Department.create({
+            departmentID: departmentData.departmentID,
+            departmentname: departmentData.departmentName
+        }).then((data)=>{
+            resolve(data);
+        }).catch((err)=>{
+            reject("unable to create employee.");
+        });
+        reject("unable to create employee.");
+    });
 }
 
 module.exports.updateDepartment = (departmentData) => {
-
+    return new Promise((resolve, reject) => {
+        Department.update({
+            departmentID: departmentData.departmentID,
+            departmentname: departmentData.departmentName
+        }).then((data)=>{
+            resolve(data);
+        }).catch((err)=>{
+            reject("unable to create employee.");
+        });
+        reject("unable to create employee.");
+    });
 }
 
 module.exports.getDepartmentById = (id) => {
-
+    return new Promise((resolve, reject) => {
+        Department.findAll({
+            where:{
+                departmentID: departmentData.departmentID,
+                departmentname: departmentData.departmentName
+            }
+        });
+            resolve(data);
+        }).catch((err)=>{
+            reject("unable to create employee.");
+    });
 }
