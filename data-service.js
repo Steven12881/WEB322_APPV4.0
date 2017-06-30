@@ -168,7 +168,6 @@ module.exports.getEmployeeByNum = (num) => {
 }
 
 module.exports.getManagers = () => {
-    var arryGetManagers = [];
     return new Promise((resolve, reject) => {
         sequelize.sync().then(()=>{
             Employee.findAll({
@@ -185,13 +184,8 @@ module.exports.getManagers = () => {
 module.exports.getDepartments = () => {
     return new Promise((resolve, reject) => {
         sequelize.sync().then(()=>{
-            Department.findAll({
-                attributes1: ['departmentId'],
-                attributes2: ['departmentName']
-            });
-                console.log(Department[0]),
-                resolve();
-        }).catch(() => {
+            resolve(Department.findAll());
+            }).catch((err) => {
             reject("no results returned.");
         });
         reject();
@@ -199,6 +193,7 @@ module.exports.getDepartments = () => {
 }
 
 module.exports.addEmployee = (employeeData) => {
+
     employeeData.isManager = (employeeData.isManager) ? true : false;
     return new Promise((resolve, reject) => {
         Employee.create({
@@ -226,6 +221,7 @@ module.exports.addEmployee = (employeeData) => {
 }
 
 module.exports.updateEmployee = (employeeData) => {
+
     employeeData.isManager = (employeeData.isManager) ? true : false;
     return new Promise((resolve, reject) => {
         Employee.update({
@@ -258,7 +254,7 @@ module.exports.addDepartment = (departmentData) => {
             departmentId: departmentData.departmentId,
             departmentName: departmentData.departmentName
         }).then(()=>{
-            resolve();
+            resolve(Department);
         }).catch(()=>{
             reject("unable to create employee.");
         });

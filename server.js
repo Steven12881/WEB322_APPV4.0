@@ -97,7 +97,7 @@ app.get("/employee/:empNum", (req, res) => {
     let viewData = {};
     dataService.getEmployeeByNum(req.params.empNum).then((data) => {
         viewData.data = data; //store employee data in the "viewData" object as "data"
-    }).catch(()=>{
+    }).catch(() => {
         viewData.data = null; // set employee to null if there was an error
     }).then(dataService.getDepartments).then((data) => {
         viewData.departments = data; // store department data in the "viewData" object as "departments"
@@ -110,7 +110,7 @@ app.get("/employee/:empNum", (req, res) => {
             }
         }
     }).catch(()=>{
-        viewData.departments=[]; // set departments to empty if there was an error
+        viewData.departments = []; // set departments to empty if there was an error
     }).then(()=>{
         if(viewData.data == null){ // if no employee - return an error
             res.status(404).send("Employee Not Found");
@@ -144,11 +144,11 @@ app.get("/employees/add", (req, res) => {
     });
 });
 
-app.get("/departments/add", (req,res) => {
+app.get("/departments/add", (req, res) => {
     res.render("addDepartment");
 });
 
-app.get("/employee/delete/:empNum", (req,res) => {
+app.get("/employee/delete/:empNum", (req, res) => {
     data_service.deleteEmployeeByNum(req.params.empNum).then((data) => {
         console.log(req.body);
         res.redirect("/employees");
@@ -180,7 +180,7 @@ app.post("/employee/update", (req, res) => {
     })
 });
 
-app.post("/departments/add", (req,res) => {
+app.post("/departments/add", (req, res) => {
     data_service.addDepartment(req.body).then((data) => {
         console.log(req.body);
         res.redirect("/departments");
@@ -196,7 +196,7 @@ app.post("/department/update", (req,res) => {
     });
 });
 
-app.post("department/:departmentId",(req,res) => {
+app.post("department/:departmentId", (req, res) => {
     data_service.getDepartmentById(req.params.departmentId).then((data) => {
         res.render("department", {data: data});
     }).catch((err) => {
