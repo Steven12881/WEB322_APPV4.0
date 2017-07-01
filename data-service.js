@@ -160,12 +160,13 @@ module.exports.getDepartments = () => {
 module.exports.addEmployee = (employeeData) => {
     employeeData.isManager = (employeeData.isManager) ? true : false;
     return new Promise((resolve, reject) => {
-        for (let x in employeeData) {
-            if(employeeData[x] == ""){
-                employeeData[x] = null;
+        sequelize.sync().then(() => {
+            for (let x in employeeData) {
+                if(employeeData[x] == ""){
+                    employeeData[x] = null;
+                }
             }
-        }
-            Employee.create({
+            resolve(Employee.create({
                 employeeNum: employeeData.employeeNum,
                 firstName: employeeData.firstName,
                 last_name: employeeData.last_name,
@@ -179,12 +180,12 @@ module.exports.addEmployee = (employeeData) => {
                 employeeManagerNum: employeeData.employeeManagerNum,
                 status: employeeData.status,
                 department: employeeData.department,
-                hireDate: employeeData.hireDate
-        }).then(() => {
-            resolve(Employee);
+                hireDate: employeeData.hireDate}))
+            }).catch(() => {
+                reject("unable to create employee.");
+            });
         }).catch(() => {
             reject("unable to create employee.");
-        });
     });
 }
 
@@ -218,6 +219,11 @@ module.exports.updateEmployee = (employeeData) => {
 module.exports.addDepartment = (departmentData) => {
     return new Promise((resolve, reject) => {
         sequelize.sync().then(() => {
+            for(let x in departmentData){
+                if(departmentData[x] == "") {
+                    departmentData[x] = null;
+                }
+            }
             Department.create({
                 departmentId: departmentData.departmentId,
                 departmentName: departmentData.departmentName
