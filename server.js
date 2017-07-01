@@ -95,11 +95,11 @@ app.get("/employees", (req, res) => {
 app.get("/employee/:empNum", (req, res) => {
     // initialize an empty object to store the values
     let viewData = {};
-    dataService.getEmployeeByNum(req.params.empNum).then((data) => {
+    data_service.getEmployeeByNum(req.params.empNum).then((data) => {
         viewData.data = data; //store employee data in the "viewData" object as "data"
     }).catch(() => {
         viewData.data = null; // set employee to null if there was an error
-    }).then(dataService.getDepartments).then((data) => {
+    }).then(data_service.getDepartments).then((data) => {
         viewData.departments = data; // store department data in the "viewData" object as "departments"
                                      // loop through viewData.departments and once we have found the departmentId that matches
                                      // the employee's "department" value, add a "selected" property to the matching

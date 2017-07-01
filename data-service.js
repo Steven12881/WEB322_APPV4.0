@@ -58,11 +58,11 @@ module.exports.initialize = () => {
 
     return new Promise((resolve, reject) => {
 
-        sequelize.sync().then((Employee)=>{
+        sequelize.sync().then((Employee) => {
             resolve();
-        }).then((Department)=>{
+        }).then((Department) => {
             resolve();
-        }).catch((error)=> {
+        }).catch((error) => {
             reject("unable to sync the database");
         });
         reject();
@@ -70,12 +70,10 @@ module.exports.initialize = () => {
 }
 
 module.exports.getAllEmployees = () => {
-
     return new Promise((resolve, reject) => {
-        sequelize.sync().then(()=>{
+        sequelize.sync().then(() => {
             Employee.findAll();
-                resolve(Employee.findAll());
-            }).catch((error)=>{
+            }).catch((error) => {
                 reject("no results returned.");
             });
         resolve(Employee.findAll());
@@ -85,17 +83,17 @@ module.exports.getAllEmployees = () => {
 module.exports.getEmployeesByStatus = (status) => {
 
     return new Promise((resolve, reject) => {
-        sequelize.sync().then(()=>{
+        sequelize.sync().then(() => {
             Employee.findAll({
-                attributes: ['status'],
                 where:{
-                    status: ['Full Time','Part Time']
+                    status: status
                 },
-            });
-                resolve();
-            }).then((error)=>{
+            }).then(() => {
+                resolve(Employee);
+            }).catch((err) => {
                 reject("no results returned.");
             });
+        });
         reject();
     });
 }
@@ -105,13 +103,12 @@ module.exports.getEmployeesByDepartment = (department) => {
     return new Promise((resolve, reject) => {
         sequelize.sync().then(()=>{
             Employee.findAll({
-                attributes: ['department'],
-                // where:{
-                //     employeeManagerNum: [1,2,3,4,5,6,7]
-                // },
+                where:{
+                    department: department
+                },
             });
-                resolve(employeeManagerNum);
-            }).then((error)=>{
+                resolve(Employee);
+            }).then((err)=>{
                 reject("no results returned.");
             });
         reject();
@@ -140,30 +137,30 @@ module.exports.getEmployeeByNum = (num) => {
     return new Promise((resolve, reject) => {
         sequelize.sync().then(()=>{
             Employee.findAll({
-                attributes: ['employeeNum'],
-                // where:{
-                //     employeeManagerNum: [1,2,3,4,5,6,7]
-                // },
+                order: ['isManager'],
+                where:{
+                    employeeNum: num.employeeNum
+                }
             });
-                resolve(employeeNum);
+                resolve(Employee);
             }).then((error)=>{
                 reject("no results returned.");
             });
-        reject();
+       resolve(Employee);
     });
 }
 
 module.exports.getManagers = () => {
     return new Promise((resolve, reject) => {
-        sequelize.sync().then(()=>{
-            Employee.findAll({
-                attributes: [isManager],
-            });
-                resolve(Employee);
-            }).catch((err) => {
-                reject("no results returned.");
-            });
-        reject();
+        sequelize.sync().then(() => {
+            resolve(Employee.findAll({
+                where:{
+                    isManager: true
+                }})
+            );
+        }).catch((err) => {
+            reject("no results returned.")
+        });
     });
 }
 
@@ -281,11 +278,13 @@ module.exports.deleteEmployeeByNum = (empNum) =>{
     return new Promise((resolve, reject) => {
         Employee.destroy({
             where:{
-                employeeNum: empNum
+                employeeNum: empNum.employeeNum
             }
+        }).then(()=>{
+            resolve(Employee);
+        }).catch(() => {
+            reject();
         });
-         resolve();
-    }).catch(() => {
         reject();
     });
 }
