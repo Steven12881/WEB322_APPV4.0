@@ -150,7 +150,7 @@ app.get("/departments/add", (req, res) => {
 
 app.get("/employee/delete/:empNum", (req, res) => {
     data_service.deleteEmployeeByNum(req.params.empNum).then((data) => {
-        console.log(req.body);
+        //console.log(req.body);
         res.redirect("/employees");
     }).catch((err) => {
         res.status(500).send("Unable to Remove Employee / Employee not found");
@@ -159,7 +159,6 @@ app.get("/employee/delete/:empNum", (req, res) => {
 
 app.post("/employees/add", (req, res) => {
     data_service.addEmployee(req.body).then((data) => {
-        console.log(req.body);
         res.redirect("/employees");
     }).catch((err) => {
         console.log(err);
@@ -167,13 +166,13 @@ app.post("/employees/add", (req, res) => {
 });
 
 app.post("/employees/update", (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     res.redirect("/employees");
 });
 
 app.post("/employee/update", (req, res) => {
     data_service.updateEmployee(req.body).then((data) => {
-        console.log(req.body);
+        //console.log(req.body);
         res.redirect("/employees");
     }).catch((err) => {
         console.log(err);
@@ -182,7 +181,7 @@ app.post("/employee/update", (req, res) => {
 
 app.post("/departments/add", (req, res) => {
     data_service.addDepartment(req.body).then((data) => {
-        console.log(req.body);
+        //console.log(req.body);
         res.redirect("/departments");
     }).catch((err) => {
         console.log(err);
@@ -191,7 +190,7 @@ app.post("/departments/add", (req, res) => {
 
 app.post("/department/update", (req,res) => {
     data_service.updateDepartment(req.body).then((data)=>{
-        console.log(req.body);
+        //console.log(req.body);
         res.redirect("/departments");
     });
 });
@@ -209,13 +208,3 @@ app.use((req, res) => {
 });
 
 app.listen(HTTP_PORT, onHttpStart);
-
-//Alternative solution for app.listen method.
-// app.listen(HTTP_PORT, function(res,req){
-//   console.log("Express http server listening on: " + HTTP_PORT);
-//   data_service.initialize().then(function(data){
-//       console.log(data)
-//     }).catch(function(err){
-//       console.log(err);
-//     });
-// });
