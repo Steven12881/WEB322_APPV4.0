@@ -98,33 +98,42 @@ app.get("/employees", (req, res) => {
     }
 });
 
+// app.get("/employee/:empNum", (req, res) => {
+//     // initialize an empty object to store the values
+//     let viewData = {};
+//     data_service.getEmployeeByNum(req.params.empNum).then((data) => {
+//         console.log("+++++++++++++++++\\"+ data + "\\++++++++++++++++++++++");
+//         viewData.data = data; //store employee data in the "viewData" object as "data"
+//         console.log("+++++++++++++++++\\"+ viewData.data + "\\++++++++++++++++++++++");
+//     }).catch(() => {
+//         viewData.data = null; // set employee to null if there was an error
+//     }).then(data_service.getDepartments).then((data) => {
+//         viewData.departments = data; // store department data in the "viewData" object as "departments"
+//                                      // loop through viewData.departments and once we have found the departmentId that matches
+//                                      // the employee's "department" value, add a "selected" property to the matching
+//                                      // viewData.departments object
+//         for (let i = 0; i < viewData.departments.length; i++) {
+//             if (viewData.departments[i].departmentId == viewData.data.department) {
+//                 viewData.departments[i].selected = true;
+//             }
+//         }
+//     }).catch(() => {
+//         viewData.departments = []; // set departments to empty if there was an error
+//     }).then(() => {
+//         if(viewData.data == null){ // if no employee - return an error
+//             res.status(404).send("Employee Not Found!!!");
+//         }else{
+//             res.render("employee", { viewData: viewData }); // render the "employee" view
+//         }
+//     });
+// });
+
 app.get("/employee/:empNum", (req, res) => {
-    // initialize an empty object to store the values
-    let viewData = {};
     data_service.getEmployeeByNum(req.params.empNum).then((data) => {
-        console.log("+++++++++++++++++\\"+ data + "\\++++++++++++++++++++++");
-        viewData.data = data; //store employee data in the "viewData" object as "data"
-        console.log("+++++++++++++++++\\"+ viewData.data + "\\++++++++++++++++++++++");
-    }).catch(() => {
-        viewData.data = null; // set employee to null if there was an error
-    }).then(data_service.getDepartments).then((data) => {
-        viewData.departments = data; // store department data in the "viewData" object as "departments"
-                                     // loop through viewData.departments and once we have found the departmentId that matches
-                                     // the employee's "department" value, add a "selected" property to the matching
-                                     // viewData.departments object
-        for (let i = 0; i < viewData.departments.length; i++) {
-            if (viewData.departments[i].departmentId == viewData.data.department) {
-                viewData.departments[i].selected = true;
-            }
-        }
-    }).catch(() => {
-        viewData.departments = []; // set departments to empty if there was an error
-    }).then(() => {
-        if(viewData.data == null){ // if no employee - return an error
-            res.status(404).send("Employee Not Found!!!");
-        }else{
-            res.render("employee", { viewData: viewData }); // render the "employee" view
-        }
+        console.log(data);
+        res.render("employee", { data: data });
+    }).catch((err) => {
+        res.status(404).send("Employee Not Found!!!");
     });
 });
 
@@ -182,8 +191,8 @@ app.get("/department/:departmentId", (req, res) => {
 app.post("/employees/add", (req, res) => {
     data_service.addEmployee(req.body).then((data) => {
         res.redirect("/employees");
-    }).catch((err) => {
-        console.log(err);
+    }).catch(() => {
+        console.log();
     });
 });
 
@@ -202,7 +211,7 @@ app.post("/employee/update", (req, res) => {
 app.post("/departments/add", (req, res) => {
     data_service.addDepartment(req.body).then((data) => {
         res.redirect("/departments");
-    }).catch((err) => {
+    }).catch(() => {
         console.log(err);
     });
 });

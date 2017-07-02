@@ -213,10 +213,10 @@ module.exports.updateEmployee = (employeeData) => {
                 status: employeeData.status,
                 department: employeeData.department,
                 hireDate: employeeData.hireDate}));
-            }).catch(() => {
+            }).catch((err) => {
                 reject("unable to create employee.");
             });
-        }).catch(() => {
+        }).catch((err) => {
             reject("unable to create employee.");
     });
 }
