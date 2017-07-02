@@ -60,7 +60,7 @@ module.exports.initialize = () => {
             resolve();
         }).then((Department) => {
             resolve();
-        }).catch((error) => {
+        }).catch((err) => {
             reject("unable to sync the database");
         });
         reject();
@@ -71,7 +71,7 @@ module.exports.getAllEmployees = () => {
     return new Promise((resolve, reject) => {
         sequelize.sync().then(() => {
             resolve(Employee.findAll());
-        }).catch((error) => {
+        }).catch((err) => {
             reject("no results returned.");
         });
     });
@@ -148,7 +148,7 @@ module.exports.getManagers = () => {
 
 module.exports.getDepartments = () => {
     return new Promise((resolve, reject) => {
-        sequelize.sync().then(()=>{
+        sequelize.sync().then(() => {
             resolve(Department.findAll());
         }).catch((err) => {
             reject("no results returned.");
@@ -274,10 +274,10 @@ module.exports.deleteEmployeeByNum = (empNum) =>{
     return new Promise((resolve, reject) => {
         sequelize.sync().then(() => {
             resolve(Employee.destroy({
-            where:{
-                employeeNum: empNum
-            }}));
-        }).catch(() => {
+                where:{
+                    employeeNum: empNum
+                }}));
+        }).catch((err) => {
             reject();
         });
     });
