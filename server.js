@@ -207,6 +207,7 @@ app.post("/employee/update", (req, res) => {
 
 app.post("/departments/add", (req, res) => {
     data_service.addDepartment(req.body).then((data) => {
+        //res.send(data);
         res.redirect("/departments");
     }).catch(() => {
         console.log(err);

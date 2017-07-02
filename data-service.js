@@ -240,7 +240,6 @@ module.exports.addDepartment = (departmentData) => {
         }).catch(() => {
             reject("unable to create department.");
         });
-        reject("unable to create department.");
     });
 }
 
