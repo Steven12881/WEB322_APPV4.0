@@ -1,6 +1,6 @@
 /*********************************************************************************
  *  WEB322 –Assignment02
- *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
+ *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part
  *  of this assignment has been copied manually or electronically from any other source
  *  (including 3rd party web sites) or distributed to other students.
  *
@@ -60,7 +60,6 @@ app.set("view engine", ".hbs");
 
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", (req, res) => {
-    //res.send("Hello World<br /><a href='/about'>Go to the about page</a>");
     res.render("home");
 });
 
@@ -72,7 +71,6 @@ app.get("/about", (req, res) => {
 app.get("/employees", (req, res) => {
     if (req.query.status) {
         data_service.getEmployeesByStatus(req.query.status).then((data) => {
-            console.log(data);
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
             res.render("employeeList", { data: {}, title: "Employees" });
@@ -98,48 +96,37 @@ app.get("/employees", (req, res) => {
     }
 });
 
-// app.get("/employee/:empNum", (req, res) => {
-//     // initialize an empty object to store the values
-//     let viewData = {};
-//     data_service.getEmployeeByNum(req.params.empNum).then((data) => {
-//         console.log("+++++++++++++++++\\"+ data + "\\++++++++++++++++++++++");
-//         viewData.data = data; //store employee data in the "viewData" object as "data"
-//         console.log("+++++++++++++++++\\"+ viewData.data + "\\++++++++++++++++++++++");
-//     }).catch(() => {
-//         viewData.data = null; // set employee to null if there was an error
-//     }).then(data_service.getDepartments).then((data) => {
-//         viewData.departments = data; // store department data in the "viewData" object as "departments"
-//                                      // loop through viewData.departments and once we have found the departmentId that matches
-//                                      // the employee's "department" value, add a "selected" property to the matching
-//                                      // viewData.departments object
-//         for (let i = 0; i < viewData.departments.length; i++) {
-//             if (viewData.departments[i].departmentId == viewData.data.department) {
-//                 viewData.departments[i].selected = true;
-//             }
-//         }
-//     }).catch(() => {
-//         viewData.departments = []; // set departments to empty if there was an error
-//     }).then(() => {
-//         if(viewData.data == null){ // if no employee - return an error
-//             res.status(404).send("Employee Not Found!!!");
-//         }else{
-//             res.render("employee", { viewData: viewData }); // render the "employee" view
-//         }
-//     });
-// });
-
 app.get("/employee/:empNum", (req, res) => {
+    // initialize an empty object to store the values
+    let viewData = {};
     data_service.getEmployeeByNum(req.params.empNum).then((data) => {
-        console.log(data);
-        res.render("employee", { data: data });
-    }).catch((err) => {
-        res.status(404).send("Employee Not Found!!!");
+        viewData.data = data; //store employee data in the "viewData" object as "data"
+    }).catch(() => {
+        viewData.data = null; // set employee to null if there was an error
+    }).then(data_service.getDepartments).then((data) => {
+        viewData.departments = data; // store department data in the "viewData" object as "departments"
+                                     // loop through viewData.departments and once we have found the departmentId that matches
+                                     // the employee's "department" value, add a "selected" property to the matching
+                                     // viewData.departments object
+        for (let i = 0; i < viewData.departments.length; i++) {
+            if (viewData.departments[i].departmentId == viewData.data.department) {
+                viewData.departments[i].selected = true;
+            }
+        }
+    }).catch(() => {
+        viewData.departments = []; // set departments to empty if there was an error
+    }).then(() => {
+        if(viewData.data == null){ // if no employee - return an error
+            res.status(404).send("Employee Not Found!!!");
+        }else{
+            // res.send(viewData);
+            res.render("employee", { viewData: viewData }); // render the "employee" view
+        }
     });
 });
 
 app.get("/managers", (req, res) => {
     data_service.getManagers().then((data) => {
-        console.log(data);
         res.render("employeeList", { data: data, title: "Employees (Managers)" });
     }).catch((err) => {
         res.render("employeeList", { data: {}, title: "Employees (Managers)" });
@@ -177,15 +164,17 @@ app.get("/employee/delete/:empNum", (req, res) => {
 
 app.get("/department/:departmentId", (req, res) => {
     data_service.getDepartmentById(req.params.departmentId).then((data) => {
-        console.log(data);
-        res.render("department", {data: data});
+        // res.send(departmentData);
+        res.render("department", {
+           data: data
+        });
     }).catch((err) => {
         res.status(404).send("Department Not Found");
     });
 });
 
 /////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////Post Route ////////////////////////////////
+/////////////////////////////////////Post Route /////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
 app.post("/employees/add", (req, res) => {
