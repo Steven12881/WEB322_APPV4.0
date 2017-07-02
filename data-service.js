@@ -106,13 +106,12 @@ module.exports.getEmployeesByDepartment = (department) => {
 }
 
 module.exports.getEmployeesByManager = (manager) => {
-        console.log("/////////////////////////////////"+manager);
     return new Promise((resolve, reject) => {
         sequelize.sync().then(() => {
             resolve(Employee.findAll({
                 where:{
                     employeeManagerNum: manager
-                },
+                }
             }));
             }).catch((err) => {
                 reject("no results returned.");
@@ -128,8 +127,8 @@ module.exports.getEmployeeByNum = (num) => {
                     employeeNum: num
                 }
             }));
-        }).catch((err) => {
-            reject("no results returned.");
+            }).catch((err) => {
+                reject("no results returned.");
         });
     });
 }

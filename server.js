@@ -79,13 +79,11 @@ app.get("/employees", (req, res) => {
         });
     } else if (req.query.department) {
         data_service.getEmployeesByDepartment(req.query.department).then((data) => {
-            console.log(data);
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
             res.render("employeeList", { data: {}, title: "Employees" });
         });
     } else if (req.query.manager) {
-        console.log("+++++++++++++++++++++++++++++++++++"+req.query.manager);
         data_service.getEmployeesByManager(req.query.manager).then((data) => {
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
@@ -93,7 +91,6 @@ app.get("/employees", (req, res) => {
         });
     } else {
         data_service.getAllEmployees().then((data) => {
-            console.log(data);
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
             res.render("employeeList", { data: {}, title: "Employees" });
@@ -105,7 +102,9 @@ app.get("/employee/:empNum", (req, res) => {
     // initialize an empty object to store the values
     let viewData = {};
     data_service.getEmployeeByNum(req.params.empNum).then((data) => {
+        console.log("+++++++++++++++++\\"+ data + "\\++++++++++++++++++++++");
         viewData.data = data; //store employee data in the "viewData" object as "data"
+        console.log("+++++++++++++++++\\"+ viewData.data + "\\++++++++++++++++++++++");
     }).catch(() => {
         viewData.data = null; // set employee to null if there was an error
     }).then(data_service.getDepartments).then((data) => {
@@ -118,9 +117,9 @@ app.get("/employee/:empNum", (req, res) => {
                 viewData.departments[i].selected = true;
             }
         }
-    }).catch(()=>{
+    }).catch(() => {
         viewData.departments = []; // set departments to empty if there was an error
-    }).then(()=>{
+    }).then(() => {
         if(viewData.data == null){ // if no employee - return an error
             res.status(404).send("Employee Not Found!!!");
         }else{
@@ -131,7 +130,7 @@ app.get("/employee/:empNum", (req, res) => {
 
 app.get("/managers", (req, res) => {
     data_service.getManagers().then((data) => {
-
+        console.log(data);
         res.render("employeeList", { data: data, title: "Employees (Managers)" });
     }).catch((err) => {
         res.render("employeeList", { data: {}, title: "Employees (Managers)" });
@@ -140,6 +139,7 @@ app.get("/managers", (req, res) => {
 
 app.get("/departments", (req, res) => {
     data_service.getDepartments().then((data) => {
+        //console.log(data);
         res.render("departmentList", { data: data, title: "Departments" });
     }).catch((err) => {
         res.render("departmentList", { data: {}, title: "Departments" });
@@ -159,7 +159,6 @@ app.get("/departments/add", (req, res) => {
 });
 
 app.get("/employee/delete/:empNum", (req, res) => {
-    console.log("++++++++++++++++++++++"+req.params.empNum);
     data_service.deleteEmployeeByNum(req.params.empNum).then((data) => {
         res.redirect("/employees");
     }).catch((err) => {
@@ -209,7 +208,7 @@ app.post("/departments/add", (req, res) => {
 });
 
 app.post("/department/update", (req,res) => {
-    data_service.updateDepartment(req.body).then((data)=>{
+    data_service.updateDepartment(req.body).then((data) => {
         res.redirect("/departments");
     });
 });
