@@ -1,5 +1,6 @@
 // Created by Xiaochen Wang
 
+// Installing "sequelize"
 const Sequelize = require('sequelize');
 
 var sequelize = new Sequelize('danje1mhbk3hao', 'turqcqnvbfsayk', 'c4ec2c9da223231ab7b71e5a3d8de6f16dec88da77844e3e4d8ed952fa58057a', {
@@ -17,6 +18,7 @@ sequelize.authenticate().then(() => {
     console.log('Unable to connect to the database:', err);
 });
 
+// Creating Data Models
 const Employee = sequelize.define('Employee',{
     employeeNum:{
         type: Sequelize.INTEGER,
