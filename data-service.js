@@ -104,32 +104,31 @@ module.exports.getEmployeesByDepartment = (department) => {
 }
 
 module.exports.getEmployeesByManager = (manager) => {
+        console.log("/////////////////////////////////"+manager);
     return new Promise((resolve, reject) => {
-        sequelize.sync().then(()=>{
+        sequelize.sync().then(() => {
             resolve(Employee.findAll({
                 where:{
                     employeeManagerNum: manager
                 },
             }));
-            }).then((error)=>{
+            }).catch((err) => {
                 reject("no results returned.");
-            });
-        reject();
+        });
     });
 }
 
 module.exports.getEmployeeByNum = (num) => {
     return new Promise((resolve, reject) => {
-        sequelize.sync().then(()=>{
+        sequelize.sync().then(() => {
             resolve(Employee.findAll({
                 where:{
                     employeeNum: num
                 }
             }));
-            }).catch((error)=>{
-                reject("no results returned.");
-            });
-       resolve();
+        }).catch((err) => {
+            reject("no results returned.");
+        });
     });
 }
 
@@ -180,7 +179,7 @@ module.exports.addEmployee = (employeeData) => {
                 employeeManagerNum: employeeData.employeeManagerNum,
                 status: employeeData.status,
                 department: employeeData.department,
-                hireDate: employeeData.hireDate}))
+                hireDate: employeeData.hireDate}));
             }).catch(() => {
                 reject("unable to create employee.");
             });
@@ -265,8 +264,8 @@ module.exports.getDepartmentById = (id) => {
                 where:{
                     departmentId: id
                 }}));
-        }).catch(() => {
-                reject("unable to find department");
+        }).catch((err) => {
+            reject("unable to find department");
         });
     });
 }

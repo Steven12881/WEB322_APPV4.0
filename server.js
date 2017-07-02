@@ -85,6 +85,7 @@ app.get("/employees", (req, res) => {
             res.render("employeeList", { data: {}, title: "Employees" });
         });
     } else if (req.query.manager) {
+        console.log("+++++++++++++++++++++++++++++++++++"+req.query.manager);
         data_service.getEmployeesByManager(req.query.manager).then((data) => {
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
