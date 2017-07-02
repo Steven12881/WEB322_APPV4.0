@@ -53,6 +53,11 @@ app.set("view engine", ".hbs");
 // alternative method.
 // app.use(express.static(path.join(__dirname, 'public')));
 
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Get Route //////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", (req, res) => {
     //res.send("Hello World<br /><a href='/about'>Go to the about page</a>");
@@ -67,12 +72,14 @@ app.get("/about", (req, res) => {
 app.get("/employees", (req, res) => {
     if (req.query.status) {
         data_service.getEmployeesByStatus(req.query.status).then((data) => {
+            console.log(data);
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
             res.render("employeeList", { data: {}, title: "Employees" });
         });
     } else if (req.query.department) {
         data_service.getEmployeesByDepartment(req.query.department).then((data) => {
+            console.log(data);
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
             res.render("employeeList", { data: {}, title: "Employees" });
@@ -85,6 +92,7 @@ app.get("/employees", (req, res) => {
         });
     } else {
         data_service.getAllEmployees().then((data) => {
+            console.log(data);
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
             res.render("employeeList", { data: {}, title: "Employees" });
@@ -113,7 +121,7 @@ app.get("/employee/:empNum", (req, res) => {
         viewData.departments = []; // set departments to empty if there was an error
     }).then(()=>{
         if(viewData.data == null){ // if no employee - return an error
-            res.status(404).send("Employee Not Found");
+            res.status(404).send("Employee Not Found!!!");
         }else{
             res.render("employee", { viewData: viewData }); // render the "employee" view
         }
@@ -122,6 +130,7 @@ app.get("/employee/:empNum", (req, res) => {
 
 app.get("/managers", (req, res) => {
     data_service.getManagers().then((data) => {
+
         res.render("employeeList", { data: data, title: "Employees (Managers)" });
     }).catch((err) => {
         res.render("employeeList", { data: {}, title: "Employees (Managers)" });
@@ -145,61 +154,62 @@ app.get("/employees/add", (req, res) => {
 });
 
 app.get("/departments/add", (req, res) => {
-    res.render("addDepartment");
+    res.render("addDepartment",{title: "Department"});
 });
 
 app.get("/employee/delete/:empNum", (req, res) => {
+    console.log("++++++++++++++++++++++"+req.params.empNum);
     data_service.deleteEmployeeByNum(req.params.empNum).then((data) => {
-        //console.log(req.body);
         res.redirect("/employees");
     }).catch((err) => {
         res.status(500).send("Unable to Remove Employee / Employee not found");
     });
 });
 
+app.get("/department/:departmentId", (req, res) => {
+    data_service.getDepartmentById(req.params.departmentId).then((data) => {
+        console.log(data);
+        res.render("department", {data: data});
+    }).catch((err) => {
+        res.status(404).send("Department Not Found");
+    });
+});
+
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Post Route ////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
 app.post("/employees/add", (req, res) => {
     data_service.addEmployee(req.body).then((data) => {
         res.redirect("/employees");
     }).catch((err) => {
         console.log(err);
-    })
+    });
 });
 
 app.post("/employees/update", (req, res) => {
-    //console.log(req.body);
     res.redirect("/employees");
 });
 
 app.post("/employee/update", (req, res) => {
     data_service.updateEmployee(req.body).then((data) => {
-        //console.log(req.body);
         res.redirect("/employees");
     }).catch((err) => {
         console.log(err);
-    })
+    });
 });
 
 app.post("/departments/add", (req, res) => {
     data_service.addDepartment(req.body).then((data) => {
-        //console.log(req.body);
         res.redirect("/departments");
     }).catch((err) => {
         console.log(err);
-    })
+    });
 });
 
 app.post("/department/update", (req,res) => {
     data_service.updateDepartment(req.body).then((data)=>{
-        //console.log(req.body);
         res.redirect("/departments");
-    });
-});
-
-app.post("department/:departmentId", (req, res) => {
-    data_service.getDepartmentById(req.params.departmentId).then((data) => {
-        res.render("department", {data: data});
-    }).catch((err) => {
-        res.status(404).send("Department Not Found");
     });
 });
 
