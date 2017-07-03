@@ -114,9 +114,9 @@
                             <label for="department">Department</label>
                             {{#if viewData.departments}}
                             <select class="form-control" name="department" id="department">
-                            {{#each viewData.departments}}
-                                <option value="{{departmentId}}" {{#if selected}} selected {{/if}} >{{departmentName}} </option>
-                            {{/each}}
+                                {{#each viewData.departments}}
+                                <option value="{{departmentId}}" {{#if selected}} selected {{/if}} >{{departmentName}}</option>
+                                {{/each}}
                             </select>
                             {{else}}
                                 <div>No&nbsp;Departments</div>

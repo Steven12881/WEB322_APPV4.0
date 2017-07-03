@@ -77,14 +77,6 @@ app.get("/employees", (req, res) => {
         });
     } else if (req.query.department) {
         data_service.getEmployeesByDepartment(req.query.department).then((data) => {
-            var myObj ={
-                objectData : "No Data Available"
-            };
-
-            if (data.length == 0) {
-                data = myObj ;
-            }
-            //res.send(data);
             res.render("employeeList", { data: data, title: "Employees" });
         }).catch((err) => {
             res.render("employeeList", { data: {}, title: "Employees" });

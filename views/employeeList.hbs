@@ -25,6 +25,11 @@
                 </tr>
             </thead>
             <tbody>
+                 {{!--{{#if data.value}}
+                    <tr>
+                        <td>{{data.message}}</td>
+                    </tr>
+                 {{else}}--}}
                  {{#each data}}
                     <tr>
                         <td>{{{employeeNum}}}</td>
@@ -36,6 +41,10 @@
                         <td><a href="/employees?department={{department}}">{{department}}</a></td>
                         <td>{{hireDate}}</td>
                         <td><button type="button" class="btn btn-danger" href="employee/delete/{{employeeNum}}">remove</button></td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td>No Data Available</td>
                     </tr>
                 {{/each}}
             </tbody>
