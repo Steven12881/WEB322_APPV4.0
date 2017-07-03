@@ -61,3 +61,9 @@ table thead tr th{
     white-space: nowrap;
     background:transparent;
 }
+
+table tr td{
+    table-layout: fixed;
+    white-space: nowrap;
+    background:transparent;
+}

@@ -53,10 +53,7 @@ app.set("view engine", ".hbs");
 // alternative method.
 // app.use(express.static(path.join(__dirname, 'public')));
 
-/////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////Get Route //////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-
 
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", (req, res) => {
@@ -116,10 +113,9 @@ app.get("/employee/:empNum", (req, res) => {
     }).catch(() => {
         viewData.departments = []; // set departments to empty if there was an error
     }).then(() => {
-        if(viewData.data == null){ // if no employee - return an error
+        if (viewData.data == null){ // if no employee - return an error
             res.status(404).send("Employee Not Found!!!");
-        }else{
-            // res.send(viewData);
+        } else {
             res.render("employee", { viewData: viewData }); // render the "employee" view
         }
     });
@@ -135,7 +131,6 @@ app.get("/managers", (req, res) => {
 
 app.get("/departments", (req, res) => {
     data_service.getDepartments().then((data) => {
-        //console.log(data);
         res.render("departmentList", { data: data, title: "Departments" });
     }).catch((err) => {
         res.render("departmentList", { data: {}, title: "Departments" });
@@ -164,7 +159,6 @@ app.get("/employee/delete/:empNum", (req, res) => {
 
 app.get("/department/:departmentId", (req, res) => {
     data_service.getDepartmentById(req.params.departmentId).then((data) => {
-        // res.send(departmentData);
         res.render("department", {
            data: data
         });
@@ -173,15 +167,13 @@ app.get("/department/:departmentId", (req, res) => {
     });
 });
 
-/////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////Post Route /////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
 
 app.post("/employees/add", (req, res) => {
     data_service.addEmployee(req.body).then((data) => {
         res.redirect("/employees");
-    }).catch(() => {
-        console.log();
+    }).catch((err) => {
+        console.log(err);
     });
 });
 
@@ -199,7 +191,6 @@ app.post("/employee/update", (req, res) => {
 
 app.post("/departments/add", (req, res) => {
     data_service.addDepartment(req.body).then((data) => {
-        //res.send(data);
         res.redirect("/departments");
     }).catch(() => {
         console.log(err);
