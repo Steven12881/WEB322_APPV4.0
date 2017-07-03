@@ -199,25 +199,23 @@ module.exports.updateEmployee = (employeeData) => {
                 }
             }
             resolve(Employee.update({
-                employeeNum: employeeData.employeeNum,
                 firstName: employeeData.firstName,
                 last_name: employeeData.last_name,
                 email: employeeData.email,
-                SSN: employeeData.SSN,
                 addressStreet: employeeData.addressStreet,
                 addresCity: employeeData.addresCity,
-                isManager: employeeData.isManager,
-                addressState: employeeData.addressState,
                 addressPostal: employeeData.addressPostal,
+                addressState: employeeData.addressPostal,
+                isManager: employeeData.isManager,
                 employeeManagerNum: employeeData.employeeManagerNum,
                 status: employeeData.status,
-                department: employeeData.department,
-                hireDate: employeeData.hireDate}));
-            }).catch((err) => {
-                reject("unable to create employee.");
-            });
-        }).catch((err) => {
+                department: employeeData.department
+            }, { where: {
+                employeeNum: employeeData.employeeNum
+            }}));
+        }).catch(() => {
             reject("unable to create employee.");
+        });
     });
 }
 
@@ -245,15 +243,24 @@ module.exports.addDepartment = (departmentData) => {
 
 module.exports.updateDepartment = (departmentData) => {
     return new Promise((resolve, reject) => {
-        Department.update({
-            departmentId: departmentData.departmentId,
-            departmentName: departmentData.departmentName
-        }).then(() => {
-            resolve();
+        sequelize.sync().then(() => {
+            for(let x in departmentData){
+                if(departmentData[x] == "") {
+                    departmentData[x] = null;
+                }
+            }
+            Department.update({
+                departmentName: departmentData.departmentName
+            }, { where: {
+                departmentId: departmentData.departmentId
+            }}).then(() =>{
+                resolve(Department);
+            }).catch((err) => {
+                reject("unable to create department.");
+            });
         }).catch(() => {
             reject("unable to create department.");
         });
-        reject("unable to create department.");
     });
 }
 
