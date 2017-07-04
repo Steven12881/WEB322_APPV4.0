@@ -114,6 +114,9 @@
                             <label for="department">Department</label>
                             {{#if viewData.departments}}
                             <select class="form-control" name="department" id="department">
+                                {{#unless viewData.departments.notSelected}}
+                                <option value="">Please&nbsp;Choose&nbsp;Department</option>
+                                {{/unless}}
                                 {{#each viewData.departments}}
                                 <option value="{{departmentId}}" {{#if selected}} selected {{/if}} >{{departmentName}}</option>
                                 {{/each}}

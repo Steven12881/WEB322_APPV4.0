@@ -105,13 +105,14 @@ app.get("/employee/:empNum", (req, res) => {
                                      // loop through viewData.departments and once we have found the departmentId that matches
                                      // the employee's "department" value, add a "selected" property to the matching
                                      // viewData.departments object
-        var myobjectData = {
-            selected: true
-        }
         for (let i = 0; i < viewData.departments.length; i++) {
             if (viewData.departments[i].departmentId == viewData.data[0].department) {
                 viewData.departments[i].selected = true;
             }
+        }
+        // if not add department set Selected to false and promto a message to user, message like "Please Choose Department" in html.
+        if (viewData.departments[viewData.departments.length-1].departmentId != viewData.data[0].department) {
+            viewData.departments.Selected = false;
         }
     }).catch(() => {
         viewData.departments = []; // set departments to empty if there was an error
