@@ -106,11 +106,10 @@
                                 <option value="">Please&nbsp;Choose&nbsp;Department</option>{{/unless}}{{#each viewData.departments}}
                                 <option value="{{departmentId}}" {{#if selected}} selected {{/if}} >{{departmentName}}</option>{{/each}}
                             </select>{{else}}
-                                <div>No&nbsp;Departments</div>{{/if}}
+                            <div>No&nbsp;Departments</div>{{/if}}
                         </div>
                     </div>
-                </div>
-                {{#each viewData.data}}
+                </div>{{#each viewData.data}}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -122,7 +121,6 @@
             </fieldset>
             <hr />
             <input type="submit" class="btn btn-primary pull-right" value="Update Employee" /><br /><br /><br />
-        </form>
-        {{/each}}
+        </form>{{/each}}
     </div>
 </div>

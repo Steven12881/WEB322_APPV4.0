@@ -1,6 +1,5 @@
  <div class="row">
-    <div class="col-md-12">
-        {{#each data}}
+    <div class="col-md-12">{{#each data}}
         <h1>{{departmentName}}&nbsp;-&nbsp;Department:&nbsp;{{departmentId}}</h1>
         <hr />
         <form method="post" action="/department/update">
@@ -15,7 +14,6 @@
                 </div>
             <hr />
             <input type="submit" class="btn btn-primary pull-right" value="Update Department" /><br /><br /><br />
-        </form>
-        {{/each}}
+        </form>{{/each}}
     </div>
 </div>
