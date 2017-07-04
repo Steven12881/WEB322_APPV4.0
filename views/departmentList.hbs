@@ -14,18 +14,15 @@
                         <th>Department&nbsp;Name</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {{#each data}}
+                <tbody>{{#each data}}
                     <tr>
                         <td><a href="/department/{{departmentId}}">{{departmentId}}</a></td>
                         <td><a href="/employees?department={{departmentId}}">{{departmentName}}</a></td>
-                    </tr>
-                    {{else}}
+                    </tr>{{else}}
                     <tr>
                         <td>No&nbsp;Data&nbsp;Available</td>
                         <td></td>
-                    </tr>
-                    {{/each}}
+                    </tr>{{/each}}
                 </tbody>
             </table>
         </div>

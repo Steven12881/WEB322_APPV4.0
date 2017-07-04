@@ -64,12 +64,9 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="isManager">Manager:</label>
-                            {{#if isManager}}
-                            <input class="form-control" type="checkbox" id="isManager" name="isManager" checked />
-                            {{else}}
-                            <input class="form-control" type="checkbox" id="isManager" name="isManager" />
-                            {{/if}}
+                            <label for="isManager">Manager:</label>{{#if isManager}}
+                            <input class="form-control" type="checkbox" id="isManager" name="isManager" checked />{{else}}
+                            <input class="form-control" type="checkbox" id="isManager" name="isManager" />{{/if}}
                         </div>
                     </div>
 
@@ -81,49 +78,35 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Status:</label><br />
-                            {{#equal status "Full Time"}}
+                            <label>Status:</label><br />{{#equal status "Full Time"}}
                             <label class="checkbox-inline">
                                 <input type="radio" id="statusFulltime" name="status" value="Full Time" checked="" /> Full&nbsp;Time
                             </label>
                                 <label class="checkbox-inline">
                                 <input type="radio" id="statusParttime" name="status" value="Part Time"  /> Part&nbsp;Time
-                            </label>
-                            {{/equal}}
-                            {{#equal status "Part Time"}}
+                            </label>{{/equal}}{{#equal status "Part Time"}}
                             <label class="checkbox-inline">
                                 <input type="radio" id="statusFulltime" name="status" value="Full Time"  /> Full&nbsp;Time
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" id="statusParttime" name="status" value="Part Time" checked="" /> Part&nbsp;Time
-                            </label>
-                            {{/equal}}
-                            {{#unless status}}
+                            </label>{{/equal}}{{#unless status}}
                             <label class="checkbox-inline">
                                 <input type="radio" id="statusFulltime" name="status" value="Full Time"  /> Full&nbsp;Time
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" id="statusParttime" name="status" value="Part Time" /> Part&nbsp;Time
-                            </label>
-                            {{/unless}}
+                            </label>{{/unless}}
                         </div>
-                    </div>
-                    {{/each}}
+                    </div>{{/each}}
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="department">Department</label>
-                            {{#if viewData.departments}}
-                            <select class="form-control" name="department" id="department">
-                                {{#unless viewData.departments.Selected}}
-                                <option value="">Please&nbsp;Choose&nbsp;Department</option>
-                                {{/unless}}
-                                {{#each viewData.departments}}
-                                <option value="{{departmentId}}" {{#if selected}} selected {{/if}} >{{departmentName}}</option>
-                                {{/each}}
-                            </select>
-                            {{else}}
-                                <div>No&nbsp;Departments</div>
-                            {{/if}}
+                            <label for="department">Department</label>{{#if viewData.departments}}
+                            <select class="form-control" name="department" id="department">{{#unless viewData.departments.Selected}}
+                                <option value="">Please&nbsp;Choose&nbsp;Department</option>{{/unless}}{{#each viewData.departments}}
+                                <option value="{{departmentId}}" {{#if selected}} selected {{/if}} >{{departmentName}}</option>{{/each}}
+                            </select>{{else}}
+                                <div>No&nbsp;Departments</div>{{/if}}
                         </div>
                     </div>
                 </div>

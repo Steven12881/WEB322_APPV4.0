@@ -57,13 +57,12 @@ P{
 }
 
 table thead tr th{
-    table-layout: fixed;
+    /*table-layout: fixed;*/
     white-space: nowrap;
     background:transparent;
+    text-align:left;
 }
 
 table tr td{
-    table-layout: fixed;
-    white-space: nowrap;
-    background:transparent;
+    text-align: left;
 }
