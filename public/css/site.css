@@ -64,5 +64,6 @@ table thead tr th{
 }
 
 table tr td{
+    background:transparent;
     text-align: left;
 }
