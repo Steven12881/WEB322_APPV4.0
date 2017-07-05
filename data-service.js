@@ -38,7 +38,7 @@ const Employee = sequelize.define('Employee',{
     employeeManagerNum: Sequelize.INTEGER,
     status: Sequelize.STRING,
     department: Sequelize.INTEGER,
-    hireDate: Sequelize.DATE
+    hireDate: Sequelize.STRING
     }, {
         createdAt: false, // disable createdAt
         updatedAt: false // disable updatedAt
