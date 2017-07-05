@@ -7,7 +7,8 @@ Here the **[WEB322_APPV4.0](https://fast-forest-51536.herokuapp.com/)** website 
  ### because it have my name in my package.json file, also other files. Btw, I change home page css sheet little bits.
 
 
-Powerd by:
+## Powerd by: ##
+
 ![alt text][logo]
 
 [logo]: https://softwareengineeringdaily.com/wp-content/uploads/2016/10/PostgreSQL.png "Logo Title Text 2"
