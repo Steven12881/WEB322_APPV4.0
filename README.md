@@ -6,7 +6,7 @@ Here the **[WEB322_APPV4.0](https://fast-forest-51536.herokuapp.com/)** website 
  # :hand::hand::hand: PLEASE DO NOT COPY. :hand::hand::hand: It is just can be a reference.
  ### because it have my name in my package.json file, also other files. Btw, I change home page css sheet little bits.
 
-
+[![Stories in Ready](https://badge.waffle.io/xwang345/OOP244_W5_AT_HOME.svg?label=ready&title=Ready)](http://waffle.io/xwang345/OOP244_W5_AT_HOME) 
 ## Powerd by: ##
 
 ![alt text][logo]
